@@ -4,6 +4,8 @@ ThisBuild / scalaVersion := "2.13.2"
 
 val SparkVersion = "3.3.2"
 
+val uTest = "com.lihaoyi" %% "utest" % "0.7.11" % "test"
+
 val sparkDependencies = Seq(
   "org.apache.spark" %% "spark-core" % SparkVersion,
   "org.apache.spark" %% "spark-sql"  % SparkVersion
@@ -12,6 +14,7 @@ val sparkDependencies = Seq(
 lazy val root = (project in file("."))
   .settings(
     name := "spark-utilities",
+    libraryDependencies += uTest,
     libraryDependencies ++= sparkDependencies.map(_ % "provided"),
     assemblyPackageScala / assembleArtifact := false,
     assemblyPackageDependency / assembleArtifact := false
