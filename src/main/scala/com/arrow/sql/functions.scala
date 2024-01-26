@@ -1,8 +1,10 @@
 package com.arrow.sql
 
-import org.apache.spark.sql.Column
+import org.apache.spark.sql.{Column, Dataset}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.TimestampType
+
+import scala.collection.immutable.ListMap
 
 object functions {
 
@@ -17,7 +19,7 @@ object functions {
     from_utc_timestamp(millisToTimestamp(millisCol), timezone).alias(millisCol.toString())
   }
 
-  def distanceInMeters(x1: Column, y1: Column, x2: Column, y2: Column): Column = {
+  def calculateDistanceBetweenCoordinatesInMeters(x1: Column, y1: Column, x2: Column, y2: Column): Column = {
     val x1Rad = radians(x1)
     val y1Rad = radians(y1)
     val x2Rad = radians(x2)
@@ -32,5 +34,9 @@ object functions {
       )
     )
     lit(2) * EarthRadiusMeters * t
+  }
+
+  def addColumns(cols: ListMap[String, Column])(ds: Dataset[_]): Dataset[_] = {
+    cols.foldLeft(ds.toDF) { case (ds, (alias, expression)) => ds.withColumn(alias, expression) }
   }
 }
