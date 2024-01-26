@@ -10,6 +10,17 @@ tmp/
 *.swp
 .bsp/
 
+.DS_Store
+Thumbs.db
+
+*.app
+*.exe
+*.war
+
+*log4j.properties
+
+build
+
 # vscode
 .bloop/
 .metals
