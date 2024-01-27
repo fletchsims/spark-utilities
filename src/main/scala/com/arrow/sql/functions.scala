@@ -9,8 +9,45 @@ import scala.collection.immutable.ListMap
 
 object functions {
 
-  private val MillisInSecond = 1000L
-  private val EarthRadiusMeters: Column = lit(6378137.0)
+  val MillisInSecond: Long = 1000L
+  val SecondsInMinute: Long = 60L
+  val MinutesInHour: Long = 60L
+  val HoursInDay: Long = 24L
+  val OneDayMilliseconds: Long = 1L * 24L * 60L * 60L * 1000L
+  val EarthRadiusMeters: Column = lit(6378137.0)
+
+  implicit class ExtendedInt(val timeVal: Int) extends AnyVal {
+    private def multiplyMillisFactors(factors: Long*): Long = factors.product * timeVal.toLong
+
+    private def divideMillisFactors(factors: Long*): Long = timeVal.toLong / factors.product
+
+    def daysToMillis: Long =
+      multiplyMillisFactors(HoursInDay, MinutesInHour, SecondsInMinute, MillisInSecond)
+
+    def hoursToMillis: Long = multiplyMillisFactors(MinutesInHour, SecondsInMinute, MillisInSecond)
+
+    def millisToDays: Long =
+      divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour, HoursInDay)
+
+    def millisToHours: Long = divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour)
+  }
+
+  implicit class ExtendedColumn(val timeCol: Column) extends AnyVal {
+    private def multiplyMillisFactors(factors: Long*): Column = factors.product * timeCol
+
+    private def divideMillisFactors(factors: Long*): Column = timeCol / factors.product
+
+    def daysToMillis: Column =
+      multiplyMillisFactors(HoursInDay, MinutesInHour, SecondsInMinute, MillisInSecond)
+
+    def hoursToMillis: Column =
+      multiplyMillisFactors(MinutesInHour, SecondsInMinute, MillisInSecond)
+
+    def millisToDays: Column =
+      divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour, HoursInDay)
+
+    def millisToHours: Column = divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour)
+  }
 
   def millisToTimestamp(millisCol: Column): Column = {
     (millisCol / MillisInSecond).cast(TimestampType).alias(millisCol.toString())
