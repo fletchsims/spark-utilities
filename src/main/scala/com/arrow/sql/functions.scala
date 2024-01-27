@@ -1,5 +1,6 @@
 package com.arrow.sql
 
+import org.apache.spark.sql.expressions.{Window, WindowSpec}
 import org.apache.spark.sql.{Column, Dataset}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.TimestampType
@@ -19,7 +20,12 @@ object functions {
     from_utc_timestamp(millisToTimestamp(millisCol), timezone).alias(millisCol.toString())
   }
 
-  def calculateDistanceBetweenCoordinatesInMeters(x1: Column, y1: Column, x2: Column, y2: Column): Column = {
+  def calculateDistanceBetweenCoordinatesInMeters(
+      x1: Column,
+      y1: Column,
+      x2: Column,
+      y2: Column
+  ): Column = {
     val x1Rad = radians(x1)
     val y1Rad = radians(y1)
     val x2Rad = radians(x2)
@@ -39,4 +45,24 @@ object functions {
   def addColumns(cols: ListMap[String, Column])(ds: Dataset[_]): Dataset[_] = {
     cols.foldLeft(ds.toDF) { case (ds, (alias, expression)) => ds.withColumn(alias, expression) }
   }
+
+  def customWindow(
+      partitionByCols: Option[List[Column]] = None,
+      orderByCols: Option[List[Column]] = None,
+      rangeBetweenAll: Option[Boolean] = Option(true)
+  ): WindowSpec = {
+    val partitioned = partitionByCols match {
+      case Some(cols) if cols.exists(_ != null) => Window.partitionBy(cols: _*)
+      case _                                    => Window.partitionBy()
+    }
+    val ordered = orderByCols match {
+      case Some(cols) if cols.exists(_ != null) => partitioned.orderBy(cols: _*)
+      case _                                    => partitioned
+    }
+    rangeBetweenAll match {
+      case Some(true) => ordered.rangeBetween(Window.unboundedPreceding, Window.unboundedFollowing)
+      case _          => ordered
+    }
+  }
+
 }
