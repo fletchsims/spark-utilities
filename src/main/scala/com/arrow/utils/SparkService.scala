@@ -1,7 +1,7 @@
 package com.arrow.utils
 
 import org.apache.spark.sql.streaming.DataStreamReader
-import org.apache.spark.sql.{DataFrameReader, Dataset, Encoder, Encoders, SparkSession}
+import org.apache.spark.sql.{DataFrameReader, DataFrameWriter, Dataset, Encoder, Encoders, SparkSession}
 
 import scala.reflect.runtime.universe.TypeTag
 object SparkService {
@@ -18,7 +18,7 @@ object SparkService {
 
   val streamReader: DataStreamReader = spark.readStream
 
-  def readJsonFileWithCustomSchema[T <: Product: TypeTag](
+  def readFileWithCustomSchema[T <: Product: TypeTag](
       paths: Seq[String],
       format: String = "json",
       handleErrorMode: String = "FAILFAST"
