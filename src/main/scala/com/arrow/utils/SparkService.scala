@@ -1,7 +1,7 @@
 package com.arrow.utils
 
 import org.apache.spark.sql.streaming.DataStreamReader
-import org.apache.spark.sql.{DataFrameReader, DataFrameWriter, Dataset, Encoder, Encoders, SparkSession}
+import org.apache.spark.sql._
 
 import scala.reflect.runtime.universe.TypeTag
 object SparkService {
