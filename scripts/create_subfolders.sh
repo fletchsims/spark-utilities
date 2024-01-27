@@ -11,7 +11,7 @@ scalaTestPath=${directoryName}/src/test/scala
 # create folders
 mkdir -p ${directoryName}/src/main/resources/{dev,prod,staging}
 mkdir -p ${scalaPath}/com/arrow
-mkdir -p ${directoryName}/src/test/resources{dev,prod,staging}
+mkdir -p ${directoryName}/src/test/resources/{dev,prod,staging}
 mkdir -p ${scalaTestPath}/com/arrow
 
 # create files
