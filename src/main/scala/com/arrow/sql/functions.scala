@@ -33,20 +33,16 @@ object functions {
   }
 
   implicit class ExtendedColumn(val timeCol: Column) extends AnyVal {
-    private def multiplyMillisFactors(factors: Long*): Column = factors.product * timeCol
-
-    private def divideMillisFactors(factors: Long*): Column = timeCol / factors.product
-
     def daysToMillis: Column =
-      multiplyMillisFactors(HoursInDay, MinutesInHour, SecondsInMinute, MillisInSecond)
+      timeCol * HoursInDay * MinutesInHour * SecondsInMinute * MillisInSecond
 
     def hoursToMillis: Column =
-      multiplyMillisFactors(MinutesInHour, SecondsInMinute, MillisInSecond)
+      timeCol * MinutesInHour * SecondsInMinute * MillisInSecond
 
     def millisToDays: Column =
-      divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour, HoursInDay)
+      timeCol / MillisInSecond / SecondsInMinute / MinutesInHour / HoursInDay
 
-    def millisToHours: Column = divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour)
+    def millisToHours: Column = timeCol / MillisInSecond / SecondsInMinute / MinutesInHour
   }
 
   def convertMillisToTimestamp(millisCol: Column): Column = {
