@@ -19,7 +19,7 @@ touch -a ${directoryName}/README.md
 
 echo "Subfolders in $directoryName created successfully"
 
-#0. This is for multi-project builds only!!
+#0. This is for multi-project SBT builds only!!
 #1. run build.sbt to create new module for your project
 #2. open Terminal
 #3. Two options:
