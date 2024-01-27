@@ -49,12 +49,12 @@ object functions {
     def millisToHours: Column = divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour)
   }
 
-  def millisToTimestamp(millisCol: Column): Column = {
+  def convertMillisToTimestamp(millisCol: Column): Column = {
     (millisCol / MillisInSecond).cast(TimestampType).alias(millisCol.toString())
   }
 
-  def millisToLocalTimestamp(millisCol: Column, timezone: Column): Column = {
-    from_utc_timestamp(millisToTimestamp(millisCol), timezone).alias(millisCol.toString())
+  def convertMillisToLocalTimestamp(millisCol: Column, timezone: Column): Column = {
+    from_utc_timestamp(convertMillisToTimestamp(millisCol), timezone).alias(millisCol.toString())
   }
 
   def calculateDistanceBetweenCoordinatesInMeters(
