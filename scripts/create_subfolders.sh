@@ -16,6 +16,7 @@ mkdir -p ${scalaTestPath}/com/arrow
 
 # create files
 touch -a ${directoryName}/src/main/resources/{dev,prod,staging}/vars.conf
+touch -a ${directoryName}/src/test/resources/{dev,prod,staging}/vars.conf
 touch -a ${directoryName}/README.md
 
 echo "Subfolders in $directoryName created successfully"
