@@ -11,7 +11,7 @@ scalaTestPath=${directoryName}/src/test/scala
 # create folders
 mkdir -p ${directoryName}/src/main/resources/{dev,prod,staging}
 mkdir -p ${scalaPath}/com/arrow
-mkdir -p ${scalaTestPath/com/arrow
+mkdir -p ${scalaTestPath}/com/arrow
 
 # create files
 touch -a ${directoryName}/src/main/resources/{dev,prod,staging}/vars.conf
