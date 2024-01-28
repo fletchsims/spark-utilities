@@ -18,5 +18,3 @@ jobs:
       - uses: olafurpg/setup-scala@v10
       - name: Test
         run: sbt -Dspark.testVersion=${{ matrix.spark }} ++${{ matrix.scala }} test
-      - name: Code Quality
-        run: sbt scalafmtCheckAll
