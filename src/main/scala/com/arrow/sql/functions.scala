@@ -79,6 +79,14 @@ object functions {
     cols.foldLeft(ds.toDF) { case (ds, (alias, expression)) => ds.withColumn(alias, expression) }
   }
 
+  /**
+   * Creates a custom window specification.
+   *
+   * @param partitionByCols optional list of columns by which to partition the window. Defaults to an empty list.
+   * @param orderByCols     optional list of columns by which to order the window. Defaults to an empty list.
+   * @param rangeBetweenAll optional boolean indicating if the range should be between unbounded preceding and unbounded following. Defaults to true.
+   * @return a window specification based on the provided partitioning, ordering, and range.
+   */
   def customWindow(
       partitionByCols: Option[List[Column]] = None,
       orderByCols: Option[List[Column]] = None,
@@ -98,4 +106,15 @@ object functions {
     }
   }
 
+  /**
+   * Finds the last position of the specified element in the array column.
+   *
+   * @param arrayCol the array column to search in
+   * @param element  the element to search for
+   * @return a column containing the last position of the element, or 0 if element is not found
+   */
+  def array_position_last(arrayCol: Column, element: Column): Column = {
+    val reversePositionCol: Column = array_position(reverse(arrayCol), element)
+    when(reversePositionCol === 0, 0).otherwise(size(array) - reversePositionCol + 1)
+  }
 }
