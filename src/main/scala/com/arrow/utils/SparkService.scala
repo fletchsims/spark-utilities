@@ -4,7 +4,7 @@ import org.apache.spark.sql.streaming.DataStreamReader
 import org.apache.spark.sql._
 
 import scala.reflect.runtime.universe.TypeTag
-object SparkService {
+trait SparkService {
   val spark: SparkSession = SparkSession
     .builder()
     .appName(this.toString)
