@@ -10,6 +10,7 @@ object ArrowReaders extends SparkService {
   val reader: DataFrameReader = spark.read
 
   val streamReader: DataStreamReader = spark.readStream
+
   def readFileWithCustomSchema[T <: Product: TypeTag](
       paths: Seq[String],
       format: String = "json",
