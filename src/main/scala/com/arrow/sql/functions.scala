@@ -115,6 +115,6 @@ object functions {
    */
   def array_position_last(arrayCol: Column, element: Column): Column = {
     val reversePositionCol: Column = array_position(reverse(arrayCol), element)
-    when(reversePositionCol === 0, 0).otherwise(size(array) - reversePositionCol + 1)
+    when(reversePositionCol === 0, 0).otherwise(size(arrayCol) - reversePositionCol + 1)
   }
 }
