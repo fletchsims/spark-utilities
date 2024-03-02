@@ -23,7 +23,8 @@ lazy val root = (project in file("."))
     assemblyPackageDependency / assembleArtifact := false
   )
 
-// App(s) -- Purpose is to show off an multi-project build
+// App(s)
+// Demo
 lazy val demoApp = (project in file("demo-app"))
   .settings(
     name := "demo-app",
