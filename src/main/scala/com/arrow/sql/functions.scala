@@ -16,10 +16,10 @@ object functions {
   val OneDayMilliseconds: Long = 1L * 24L * 60L * 60L * 1000L
   val EarthRadiusMeters: Column = lit(6378137.0)
 
-  implicit class ExtendedInt(val timeVal: Int) extends AnyVal {
-    private def multiplyMillisFactors(factors: Long*): Long = factors.product * timeVal.toLong
+  implicit class ExtendedInt(val col: Int) extends AnyVal {
+    private def multiplyMillisFactors(factors: Long*): Long = factors.product * col.toLong
 
-    private def divideMillisFactors(factors: Long*): Long = timeVal.toLong / factors.product
+    private def divideMillisFactors(factors: Long*): Long = col.toLong / factors.product
 
     def daysToMillis: Long =
       multiplyMillisFactors(HoursInDay, MinutesInHour, SecondsInMinute, MillisInSecond)
@@ -32,25 +32,25 @@ object functions {
     def millisToHours: Long = divideMillisFactors(MillisInSecond, SecondsInMinute, MinutesInHour)
   }
 
-  implicit class ExtendedColumn(val timeCol: Column) extends AnyVal {
+  implicit class ExtendedColumn(val col: Column) extends AnyVal {
     def daysToMillis: Column =
-      timeCol * HoursInDay * MinutesInHour * SecondsInMinute * MillisInSecond
+      col * HoursInDay * MinutesInHour * SecondsInMinute * MillisInSecond
 
     def hoursToMillis: Column =
-      timeCol * MinutesInHour * SecondsInMinute * MillisInSecond
+      col * MinutesInHour * SecondsInMinute * MillisInSecond
 
     def millisToDays: Column =
-      timeCol / MillisInSecond / SecondsInMinute / MinutesInHour / HoursInDay
+      col / MillisInSecond / SecondsInMinute / MinutesInHour / HoursInDay
 
-    def millisToHours: Column = timeCol / MillisInSecond / SecondsInMinute / MinutesInHour
+    def millisToHours: Column = col / MillisInSecond / SecondsInMinute / MinutesInHour
   }
 
-  def convertMillisToTimestamp(millisCol: Column): Column = {
-    (millisCol / MillisInSecond).cast(TimestampType).alias(millisCol.toString())
+  def convertMillisToTimestamp(col: Column): Column = {
+    (col / MillisInSecond).cast(TimestampType).alias(col.toString())
   }
 
-  def convertMillisToLocalTimestamp(millisCol: Column, timezone: Column): Column = {
-    from_utc_timestamp(convertMillisToTimestamp(millisCol), timezone).alias(millisCol.toString())
+  def convertMillisToLocalTimestamp(col: Column, timezone: Column): Column = {
+    from_utc_timestamp(convertMillisToTimestamp(col), timezone).alias(col.toString())
   }
 
   def calculateDistanceBetweenCoordinatesInMeters(
