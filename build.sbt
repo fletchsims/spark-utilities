@@ -13,7 +13,7 @@ val sparkDependencies = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(demoApp)
+  .aggregate()
   .settings(
     name := "spark-utilities",
     libraryDependencies += fastTest,
@@ -23,13 +23,3 @@ lazy val root = (project in file("."))
     assemblyPackageDependency / assembleArtifact := false
   )
 
-// App(s)
-// Demo
-lazy val demoApp = (project in file("demo-app"))
-  .settings(
-    name := "demo-app",
-    libraryDependencies += fastTest,
-    libraryDependencies += uTest,
-    libraryDependencies ++= sparkDependencies.map(_ % "provided"),
-    assemblyPackageScala / assembleArtifact := false
-  )
