@@ -118,6 +118,14 @@ object functions {
     when(reversePositionCol === 0, 0).otherwise(size(arrayCol) - reversePositionCol + 1)
   }
 
+  /**
+   * Aggregate function for any percentile
+   *
+   * @param col      the column
+   * @param fraction the percentile value
+   * @param name     alias of the column name (defaults to null)
+   * @return a new column in an aggregate function with the percentile
+   */
   def percentile(col: String, fraction: Double, name: String = null): Column =
     round(expr(s"percentile($col, $fraction)"), 2).as(if(name == null) s"${(fraction*100).toInt}%" else name)
 }
