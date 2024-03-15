@@ -117,4 +117,7 @@ object functions {
     val reversePositionCol: Column = array_position(reverse(arrayCol), element)
     when(reversePositionCol === 0, 0).otherwise(size(arrayCol) - reversePositionCol + 1)
   }
+
+  def percentile(col: String, fraction: Double, name: String = null): Column =
+    round(expr(s"percentile($col, $fraction)"), 2).as(if(name == null) s"${(fraction*100).toInt}%" else name)
 }
