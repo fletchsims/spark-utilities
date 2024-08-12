@@ -10,7 +10,7 @@ import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 import scala.util.matching.Regex
 
-trait S3Service extends S3ServiceInterface {
+trait S3Service {
 
   /**
    * AWS S3 client
