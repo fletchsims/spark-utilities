@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "2.13.2"
+ThisBuild / scalaVersion := "2.12.15"
 
 val SparkVersion = "3.3.2"
 
@@ -11,7 +11,7 @@ val awsSdkS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsSdkBom.revision
 
 val sparkDependencies = Seq(
   "org.apache.spark" %% "spark-core" % SparkVersion,
-  "org.apache.spark" %% "spark-sql"  % SparkVersion
+  "org.apache.spark" %% "spark-sql" % SparkVersion
 )
 
 lazy val root = (project in file("."))
@@ -25,4 +25,3 @@ lazy val root = (project in file("."))
     assemblyPackageScala / assembleArtifact := false,
     assemblyPackageDependency / assembleArtifact := false
   )
-
