@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scala: ["2.13.2"]
+        scala: ["2.12.15"]
         spark: ["3.3.2"]
     runs-on: ubuntu-latest
     steps:
