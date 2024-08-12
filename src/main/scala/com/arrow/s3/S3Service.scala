@@ -428,8 +428,6 @@ trait S3Service extends S3ServiceInterface {
    * @param path S3 uri
    * @return tuple of (bucket, prefix)
    *
-   * @example 3://tv-datascience-lab/kostia/test_retraining/asn_models_performance/ ->
-   * (tv-datascience-lab, kostia/test_retraining/asn_models_performance/)
    */
   def getBucketAndKeyFromPath(path: String): (String, String) = {
     val uri: AmazonS3URI = new AmazonS3URI(path)
