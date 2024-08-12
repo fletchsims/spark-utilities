@@ -360,7 +360,7 @@ trait S3Service {
     existingDates
   }
 
-  def getSubFoldersFromS3(bucket: String, key: String): Seq[String] = {
+  def getSubFoldersFromS3(bucket: String, key: String): mutable.Seq[String] = {
     val newKey = if (key.endsWith("/")) key else key + "/"
     val listRequest = new ListObjectsV2Request()
       .withBucketName(bucket)
