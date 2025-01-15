@@ -322,8 +322,8 @@ trait S3Service {
   /**
    * Returns list of dates that have dt= sub-folders in the provided s3 path (bucket + key)
    * Example:
-   * bucket = cdi-events-partition,
-   * key = event_drf_predicted_overridden_dates_json_v1,
+   * bucket = bucket-name
+   * key = key/prefix-name
    * startDate = 2022-06-26,
    * endDate = 2022-07-02,
    *
